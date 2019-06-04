@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/kr/co/board2/config/SQL.java=UTF-8
+encoding//src/kr/co/board2/dao/BoardDao.java=UTF-8
+encoding//src/kr/co/board2/dao/UserDao.java=UTF-8
+encoding//src/kr/co/board2/service/user/UidCheckService.java=UTF-8
+encoding//src/kr/co/board2/vo/BoardVO.java=UTF-8
