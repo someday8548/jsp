@@ -3,6 +3,7 @@ package kr.co.board2.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +24,10 @@ public class BoardDao {
 	
 	public void insertBoard(BoardVO bvo) throws Exception {
 		
-		// 1´Ü°è, 2´Ü°è
+		
 		Connection conn = DBConfig.getConnection();
 		
-		// 3´Ü°è
+		
 		PreparedStatement psmt = conn.prepareStatement(SQL.INSERT_BOARD);
 		psmt.setString(1, bvo.getTitle());
 		psmt.setString(2, bvo.getContent());
@@ -34,27 +35,26 @@ public class BoardDao {
 		psmt.setString(4, bvo.getUid());
 		psmt.setString(5, bvo.getRegip());
 		
-		// 4´Ü°è
+		
 		psmt.executeUpdate();
 		
-		// 5´Ü°è
-		// 6´Ü°è
+		
 		psmt.close();
 		conn.close();
 	}
 	
-	public List<BoardVO> selectList() throws Exception {
-		// 1´Ü°è, 2´Ü°è
+	public List<BoardVO> selectList(int start) throws Exception {
+		
 		Connection conn = DBConfig.getConnection();
 		
-		// 3´Ü°è
-		PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_LIST);
-		psmt.setInt(1, 1);
 		
-		// 4´Ü°è
+		PreparedStatement psmt = conn.prepareStatement(SQL.SELECT_LIST);
+		psmt.setInt(1, start);
+		
+		
 		ResultSet rs = psmt.executeQuery();
 		
-		// 5´Ü°è
+	
 		List<BoardVO> list = new ArrayList<>();
 		
 		while(rs.next()) {
@@ -76,7 +76,7 @@ public class BoardDao {
 			list.add(vo);
 		}
 		
-		// 6´Ü°è
+	
 		rs.close();
 		psmt.close();
 		conn.close();
@@ -85,7 +85,29 @@ public class BoardDao {
 		return list;
 	}
 	
+	public int getTotalCount() throws Exception {
+		
 	
+		Connection conn = DBConfig.getConnection();
+		
+		Statement stmt = conn.createStatement();
+		
+	
+		ResultSet rs = stmt.executeQuery(SQL.SELECT_COUNT_TOTAL);
+		
+	
+		int total = 0;
+		
+		if(rs.next()) {
+			total = rs.getInt(1);
+		}
+	
+		rs.close();
+		stmt.close();
+		conn.close();
+		
+		return total;
+	}
 	
 	
 	
